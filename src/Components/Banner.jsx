@@ -4,34 +4,19 @@ import ImageSlider from './ImageSlider';
 import { ReactTyped } from 'react-typed';
 
 const Banner = () => {
+  // Refs for h1 and p elements
+  const h1Ref = useRef(null);
+  const pRef = useRef(null);
 
-   // Refs for h1 and p elements
-   const h1Ref = useRef(null);
-   const pRef = useRef(null);
- 
-   useEffect(() => {
-     const observer = new IntersectionObserver(
-       ([entry], observerInstance) => {
-         if (entry.isIntersecting) {
-           // Add 'active' class when element comes into view
-           entry.target.classList.add('active');
- 
-           // Stop observing after first trigger
-           observerInstance.unobserve(entry.target);
-         }
-       },
-       { threshold: 0.1 } // trigger when 10% visible
-     );
- 
-     if (h1Ref.current) {
-       observer.observe(h1Ref.current);
-     }
-     if (pRef.current) {
-       observer.observe(pRef.current);
-     }
- 
-     return () => observer.disconnect(); // clean up
-   }, []);
+  useEffect(() => {
+    // Immediately apply the "active" class on load to trigger animations
+    if (h1Ref.current) {
+      h1Ref.current.classList.add('active');
+    }
+    if (pRef.current) {
+      pRef.current.classList.add('active');
+    }
+  }, []); // Empty dependency array to ensure this runs once after component mounts
 
   return (
     <>
@@ -55,6 +40,7 @@ const Banner = () => {
               loop
             />
           </h1>
+
           {/* Supporting text with relevant keywords */}
           <p className="slide-up p-active" ref={pRef}>
             Crafting innovative ideas to bring a smile to your users worldwide through exceptional design and functionality.

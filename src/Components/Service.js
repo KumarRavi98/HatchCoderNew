@@ -1,38 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import Footer from './Footer';
 // import ImageSlider from './ImageSlider'
 // import Services from './Services'
 
 function Service() {
-
- // Refs for h1 and p elements
- const h1Ref = useRef(null);
- const pRef = useRef(null);
-
- useEffect(() => {
-   const observer = new IntersectionObserver(
-     ([entry], observerInstance) => {
-       if (entry.isIntersecting) {
-         // Add 'active' class when element comes into view
-         entry.target.classList.add('active');
-
-         // Stop observing after first trigger
-         observerInstance.unobserve(entry.target);
-       }
-     },
-     { threshold: 0.1 } // trigger when 10% visible
-   );
-
-   if (h1Ref.current) {
-     observer.observe(h1Ref.current);
-   }
-   if (pRef.current) {
-     observer.observe(pRef.current);
-   }
-
-   return () => observer.disconnect(); // clean up
- }, []);
-
 
   return (
 <>
@@ -43,8 +14,8 @@ function Service() {
 
 <div className="tut">
 
-  <h1 className="slide-up h1-active" ref={h1Ref}>Comprehensive Digital Solutions</h1>
-  <p className="slide-up p-active" ref={pRef}>The wise man therefore always holds in these matters to this principle of selection.</p>
+  <h1>Comprehensive Digital Solutions</h1>
+  <p>The wise man therefore always holds in these matters to this principle of selection.</p>
   
 
 </div>

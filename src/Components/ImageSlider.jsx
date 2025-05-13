@@ -18,12 +18,12 @@ const ImageSlider = () => {
   };
 
   const images = [
-    "./Images/bn1.png",
-    "./Images/bn2.png",
-    "./Images/bn3.png",
-    "./Images/bn4.png",
-    "./Images/bn5.png",
-    "./Images/bn2.png",
+    "./bn1.png",
+    "./bn2.png",
+    "./bn3.png",
+    "./bn4.png",
+    "./bn5.png",
+    "./bn2.png",
   ];
 
   return (

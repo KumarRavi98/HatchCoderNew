@@ -2210,6 +2210,6 @@ img.contact-price-icon {
 }
 
 .slide-up.p-active {
-  transition-delay: 0.5s; /* P starts half a second later */
+  transition-delay: 0.3s; /* P starts half a second later */
 }
 

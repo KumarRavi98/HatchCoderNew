@@ -46,6 +46,7 @@ const VideoTestimonials = () => {
             title="Video Testimonial 1"
             frameBorder="0"
             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+            loading="lazy"
             allowFullScreen
           ></iframe>
 

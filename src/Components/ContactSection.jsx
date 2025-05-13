@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import '../Style.css';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 const ContactSection = () => {
   const [budget, setBudget] = useState(60000);
+  const [recaptchaToken, setRecaptchaToken] = useState('');
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -17,18 +19,50 @@ const ContactSection = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleRecaptchaChange = (token) => {
+    setRecaptchaToken(token);
+  };
+
   const sendEmail = async (e) => {
     e.preventDefault();
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^[6-9]\d{9}$/;
+
+    if (!emailRegex.test(formData.email)) {
+      alert('Please enter a valid email address.');
+      return;
+    }
+
+    if (!phoneRegex.test(formData.phoneNumber)) {
+      alert('Please enter a valid 10-digit mobile number starting with 6-9.');
+      return;
+    }
+
+    if (!recaptchaToken) {
+      alert('Please complete the reCAPTCHA.');
+      return;
+    }
+
     try {
-      const response = await fetch('http://localhost:5000/send-email', {
-        method: 'POST', 
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...formData, budget }),
+      const response = await fetch('https://www.hatchcoders.com/send-mail.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ...formData, budget, recaptchaToken }),
       });
 
+      const contentType = response.headers.get('Content-Type');
+
       if (response.ok) {
-        alert('Message sent successfully!');
+        const result = contentType && contentType.includes('application/json')
+          ? await response.json()
+          : { message: 'Message sent successfully!' };
+
+        alert(result.message);
+
+        // Reset form
         setFormData({
           fullName: '',
           email: '',
@@ -39,8 +73,13 @@ const ContactSection = () => {
           projectDescription: '',
         });
         setBudget(60000);
+        setRecaptchaToken('');
       } else {
-        alert('Failed to send the message. Please try again later.');
+        const result = contentType && contentType.includes('application/json')
+          ? await response.json()
+          : { message: 'Something went wrong.' };
+
+        alert('Failed to send message: ' + result.message);
       }
     } catch (error) {
       console.error('Error:', error);
@@ -60,14 +99,11 @@ const ContactSection = () => {
           <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry.</p>
           <h3>Contact Info:</h3>
           <a className="contx" href="tel:7973699595">
-            <p><img src="/Images/icn1.png" alt="img" />&nbsp; +91-7973699595</p>
+            <p><img src="/Images/icn1.png" alt="phone" />&nbsp; +91-7973699595</p>
           </a>
           <a className="contx" href="mailto:hello@hatchcoders.com">
-            <p><img src="/Images/icn3.png" alt="img" />&nbsp; hello@hatchcoders.com</p>
+            <p><img src="/Images/icn3.png" alt="email" />&nbsp; hello@hatchcoders.com</p>
           </a>
-          {/* <a className="contx" href="#">
-            <p><img src="icn2.png" alt="img" />&nbsp; E -45 phase 8, Mohali, Punjab (India)</p>
-          </a> */}
         </div>
 
         {/* Right Column */}
@@ -75,17 +111,54 @@ const ContactSection = () => {
           <h2>Let's Get to Know You</h2>
           <form onSubmit={sendEmail}>
             <div className="form-group flx-frm">
-              <input type="text" name="fullName" placeholder="Full Name" className="form-input" onChange={handleChange} value={formData.fullName} />
-              <input type="email" name="email" placeholder="Business Email" className="form-input" onChange={handleChange} value={formData.email} />
+              <input
+                type="text"
+                name="fullName"
+                placeholder="Full Name"
+                className="form-input"
+                onChange={handleChange}
+                value={formData.fullName}
+                required
+              />
+              <input
+                type="email"
+                name="email"
+                placeholder="Business Email"
+                className="form-input"
+                onChange={handleChange}
+                value={formData.email}
+                required
+              />
             </div>
 
             <div className="form-group flx-frm">
-              <input type="number" name="phoneNumber" placeholder="Phone Number" className="form-input" onChange={handleChange} value={formData.phoneNumber} />
-              <input type="text" name="companyName" placeholder="Company (or Project) Name" className="form-input" onChange={handleChange} value={formData.companyName} />
+              <input
+                type="tel"
+                name="phoneNumber"
+                placeholder="Phone Number"
+                className="form-input"
+                onChange={handleChange}
+                value={formData.phoneNumber}
+                required
+              />
+              <input
+                type="text"
+                name="companyName"
+                placeholder="Company (or Project) Name"
+                className="form-input"
+                onChange={handleChange}
+                value={formData.companyName}
+              />
             </div>
 
             <div className="form-group">
-              <select name="jobTitle" className="form-input drop" onChange={handleChange} value={formData.jobTitle}>
+              <select
+                name="jobTitle"
+                className="form-input drop"
+                onChange={handleChange}
+                value={formData.jobTitle}
+                required
+              >
                 <option value="" disabled>Job Title</option>
                 <option value="Developer">Developer</option>
                 <option value="Designer">Designer</option>
@@ -95,7 +168,13 @@ const ContactSection = () => {
             </div>
 
             <div className="form-group">
-              <select name="launchTimeline" className="form-input drop" onChange={handleChange} value={formData.launchTimeline}>
+              <select
+                name="launchTimeline"
+                className="form-input drop"
+                onChange={handleChange}
+                value={formData.launchTimeline}
+                required
+              >
                 <option value="" disabled>When do you want to launch a solution?</option>
                 <option value="Immediately">Immediately</option>
                 <option value="1-3 Months">1-3 Months</option>
@@ -127,6 +206,13 @@ const ContactSection = () => {
                 onChange={handleChange}
                 value={formData.projectDescription}
               ></textarea>
+            </div>
+
+            <div className="form-group">
+              <ReCAPTCHA
+                sitekey="6LfPqDYrAAAAAFsFuht1PuUSpDrdddl4EW3VvhtD"
+                onChange={handleRecaptchaChange}
+              />
             </div>
 
             <div className="form-group">

@@ -7,36 +7,36 @@ import Banner from './Banner';
 import ContactSection from './ContactSection';
 import OurTech from './OurTech';
 import VideoTestimonials from './VideoTestimonials';
-// import PricingPlan from './PricingPlan';
 
 const Home = () => {
-   // Refs for h1 and p elements
-   const h1Ref = useRef(null);
-   const pRef = useRef(null);
- 
-   useEffect(() => {
-     const observer = new IntersectionObserver(
-       ([entry], observerInstance) => {
-         if (entry.isIntersecting) {
-           // Add 'active' class when element comes into view
-           entry.target.classList.add('active');
- 
-           // Stop observing after first trigger
-           observerInstance.unobserve(entry.target);
-         }
-       },
-       { threshold: 0.1 } // trigger when 10% visible
-     );
- 
-     if (h1Ref.current) {
-       observer.observe(h1Ref.current);
-     }
-     if (pRef.current) {
-       observer.observe(pRef.current);
-     }
- 
-     return () => observer.disconnect(); // clean up
-   }, []);
+  // Refs for each h1 and p element to avoid conflicts
+  const h1Ref1 = useRef(null);
+  const pRef1 = useRef(null);
+  const h1Ref2 = useRef(null);
+  const pRef2 = useRef(null);
+
+  useEffect(() => {
+    // IntersectionObserver for handling animation on scroll
+    const observer = new IntersectionObserver(
+      ([entry], observerInstance) => {
+        if (entry.isIntersecting) {
+          // Add 'active' class when element comes into view
+          entry.target.classList.add('active');
+          // Stop observing after the first trigger
+          observerInstance.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.1 } // trigger when 10% visible
+    );
+
+    // Observe all elements with refs
+    if (h1Ref1.current) observer.observe(h1Ref1.current);
+    if (pRef1.current) observer.observe(pRef1.current);
+    if (h1Ref2.current) observer.observe(h1Ref2.current);
+    if (pRef2.current) observer.observe(pRef2.current);
+
+    return () => observer.disconnect(); // Clean up the observer
+  }, []);
 
   return (
     <>
@@ -55,15 +55,14 @@ const Home = () => {
         <img src="/Images/whats2.gif" alt="WhatsApp Icon" />
       </a>
 
-      {/* ----------- Comprehensive Digital Solutions Section ----------- */}
+      {/* Comprehensive Digital Solutions Section */}
       <div className="container11">
-        {/* This will animate once on scroll into view */}
         <div className="tut">
-          <h1 className="slide-up1 h1-active" ref={h1Ref}>Comprehensive Digital Solutions</h1>
-          <p className="slide-up1 p-active" ref={pRef}>The wise man therefore always holds in these matters to this principle of selection.</p>
+          <h1 className="slide-up h1-active" ref={h1Ref1}>Comprehensive Digital Solutions</h1>
+          <p className="slide-up p-active" ref={pRef1}>The wise man therefore always holds in these matters to this principle of selection.</p>
         </div>
 
-        {/* ---- Your UI icon blocks ---- */}
+        {/* Your UI icon blocks */}
         <div className="com">
           <div className="ui">
             <img className="shad1" src={process.env.PUBLIC_URL + "/Images/icon1.png"} alt="UI/UX" />
@@ -147,16 +146,15 @@ const Home = () => {
         </div>
       </div>
 
-      {/* ----------- End of Comprehensive Digital Solutions Section ----------- */}
-
       <OurTech />
       <Portfolio id="portfolio" />
 
+      {/* Testimonials Section */}
       <div id="testimo" className="test2">
         <div className="container">
           <div className="tut tut2">
-            <h1 className="slide-up h1-active" ref={h1Ref}>Why customers love working with us</h1>
-            <p className="slide-up p-active" ref={pRef}>The wise man therefore always holds in these matters to this principle of selection.</p>
+            <h1 className="slide-up h1-active" ref={h1Ref2}>Why customers love working with us</h1>
+            <p className="slide-up p-active" ref={pRef2}>The wise man therefore always holds in these matters to this principle of selection.</p>
           </div>
           <div className="herosection">
             <Testimonials />
@@ -165,7 +163,6 @@ const Home = () => {
       </div>
 
       <VideoTestimonials />
-      {/* <PricingPlan /> */}
       <ContactSection />
 
       <div className="footer">

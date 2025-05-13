@@ -139,6 +139,41 @@ const blogData = [
     content: 'Hatch Coders turns ideas into powerful digital products. We begin with thorough discovery and research. Prototyping clarifies structure and user flow. UI/UX design ensures intuitive interaction. Hatch Coders develops with the best tech stacks. Agile methodology guides our process. We conduct regular testing and QA. Hatch Coders handles deployment and store listings. Post-launch support ensures ongoing success. We track app performance and user feedback. Hatch Coders scales your app as you grow. We offer integration with third-party APIs. Monetization strategies are part of our planning. Hatch Coders delivers full-cycle mobile app solutions. Build your vision with Hatch Coders.',
     image: '/Images/blog-1.png',
   },
+   {
+    id: '21',
+    title: 'AI in Web Development: Transforming User Experiences',
+    category: 'Web Development / Artificial Intelligence',
+    content: 'Artificial Intelligence is revolutionizing how we build and interact with websites. Hatch Coders integrates AI for personalized user experiences, predictive search, and intelligent automation. From chatbots to recommendation engines, we enhance engagement through smart features. Hatch Coders builds future-ready websites by combining human creativity with machine intelligence.',
+    image: '/Images/blog-5.png',
+  },
+  {
+    id: '22',
+    title: 'Design Systems: Streamlining UI/UX Across Teams',
+    category: 'UI/UX Design',
+    content: 'Design systems bring consistency and speed to product development. Hatch Coders builds scalable systems with reusable components and clear guidelines. We align visuals and interactions across all platforms. Design systems improve collaboration between design and dev teams, ensuring brand consistency and rapid iteration.',
+    image: '/Images/blog-5.png',
+  },
+  {
+    id: '23',
+    title: 'The Impact of 5G on Mobile App Development',
+    category: 'Mobile App Development',
+    content: '5G technology is redefining mobile experiences. Hatch Coders leverages 5G’s speed for real-time features, seamless video, and AR capabilities. We optimize apps for lightning-fast performance and connectivity. With 5G, Hatch Coders builds the next generation of immersive, data-heavy mobile applications.',
+    image: '/Images/blog-5.png',
+  },
+  {
+    id: '24',
+    title: 'Local SEO Strategies to Dominate Regional Markets',
+    category: 'Digital Marketing',
+    content: 'Local SEO is key to capturing nearby customers. Hatch Coders optimizes Google My Business profiles, local keywords, and citations. We improve visibility on maps and local searches. Our geo-targeted strategies bring more foot traffic and leads. Hatch Coders helps you stand out in your service area.',
+    image: '/Images/blog-5.png',
+  },
+  {
+    id: '25',
+    title: 'Cloud-Native Development: Building for Scalability',
+    category: 'Web Development / Cloud Solutions',
+    content: 'Cloud-native apps are built to scale efficiently and resiliently. Hatch Coders uses containers, microservices, and CI/CD pipelines to ensure robust deployment. We deploy on platforms like AWS, Azure, and GCP. Cloud-native strategies reduce downtime, improve agility, and prepare your system for growth.',
+    image: '/Images/blog-5.png',
+  },
 ];
 
 export default blogData;
